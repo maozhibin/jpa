@@ -3,6 +3,8 @@ package cn.mao.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,19 @@ public class UserController {
 		map.put("user", user);
 		return result.fill(JsonResponseMsg.CODE_SUCCESS, "查询成功", map);
 
+	}
+
+	@RequestMapping("/login.do")
+	public String clientLogin(HttpSession httpSession, String username, String password) {
+
+		if (username.equals("yuan") && password.equals("123456")) {
+			// 登陆成功
+			httpSession.setAttribute("username", username);
+			return "forward:clientsList.action";
+		} else {
+			// 登陆失败
+			return "forward:login.jsp";
+		}
 	}
 
 }
